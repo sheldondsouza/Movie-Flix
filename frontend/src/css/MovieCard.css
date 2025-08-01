@@ -1,0 +1,334 @@
+/* Cyberpunk Movie Card */
+.movie-card {
+ position: relative;
+ border-radius: 0;
+ overflow: hidden;
+ background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 100%);
+ transition: all 0.3s ease;
+ height: 100%;
+ display: flex;
+ flex-direction: column;
+ border: 2px solid #00ffff;
+ clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+ box-shadow: 
+   0 0 20px rgba(0, 255, 255, 0.2),
+   inset 0 0 20px rgba(0, 255, 255, 0.05);
+}
+
+.movie-card::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: 
+   repeating-linear-gradient(
+     90deg,
+     transparent,
+     transparent 2px,
+     rgba(0, 255, 255, 0.03) 2px,
+     rgba(0, 255, 255, 0.03) 4px
+   );
+ pointer-events: none;
+ z-index: 1;
+}
+
+.movie-card:hover {
+ transform: translateY(-8px) scale(1.02);
+ border-color: #ff00ff;
+ box-shadow: 
+   0 10px 40px rgba(255, 0, 255, 0.3),
+   inset 0 0 30px rgba(255, 0, 255, 0.1);
+ animation: cyberpunkGlow 0.5s ease;
+}
+
+@keyframes cyberpunkGlow {
+ 0%, 100% { 
+   box-shadow: 
+     0 10px 40px rgba(255, 0, 255, 0.3),
+     inset 0 0 30px rgba(255, 0, 255, 0.1);
+ }
+ 50% { 
+   box-shadow: 
+     0 15px 50px rgba(255, 0, 255, 0.5),
+     inset 0 0 40px rgba(255, 0, 255, 0.2);
+ }
+}
+
+/* Cyberpunk Movie Poster */
+.movie-poster {
+ position: relative;
+ aspect-ratio: 2/3;
+ width: 100%;
+ overflow: hidden;
+}
+
+.movie-poster::after {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: 
+   linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%);
+ opacity: 0;
+ transition: opacity 0.3s ease;
+ z-index: 2;
+}
+
+.movie-card:hover .movie-poster::after {
+ opacity: 1;
+ animation: scanLine 1s ease-in-out;
+}
+
+@keyframes scanLine {
+ 0% { transform: translateX(-100%); }
+ 100% { transform: translateX(100%); }
+}
+
+.movie-poster img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ filter: contrast(1.2) saturate(0.8);
+ transition: filter 0.3s ease;
+}
+
+.movie-card:hover .movie-poster img {
+ filter: contrast(1.5) saturate(1.2) hue-rotate(10deg);
+}
+
+/* Cyberpunk Movie Overlay */
+.movie-overlay {
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: linear-gradient(
+   to bottom,
+   rgba(0, 0, 0, 0.1),
+   rgba(0, 255, 255, 0.2) 50%,
+   rgba(0, 0, 0, 0.9)
+ );
+ opacity: 0;
+ transition: opacity 0.3s ease;
+ display: flex;
+ flex-direction: column;
+ justify-content: flex-end;
+ padding: 1rem;
+ z-index: 3;
+}
+
+.movie-card:hover .movie-overlay {
+ opacity: 1;
+ animation: overlayGlitch 0.3s ease;
+}
+
+@keyframes overlayGlitch {
+ 0%, 100% { transform: translateX(0); }
+ 25% { transform: translateX(-1px); }
+ 75% { transform: translateX(1px); }
+}
+
+/* Cyberpunk Favorite Button */
+.favorite-btn {
+ position: absolute;
+ top: 1rem;
+ right: 1rem;
+ color: #00ffff;
+ font-size: 1.5rem;
+ padding: 0.5rem;
+ background: rgba(0, 0, 0, 0.8);
+ border: 2px solid #00ffff;
+ border-radius: 0;
+ width: 40px;
+ height: 40px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: all 0.3s ease;
+ clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%);
+ z-index: 4;
+ text-shadow: 0 0 10px currentColor;
+ box-shadow: 
+   0 0 15px rgba(0, 255, 255, 0.3),
+   inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.favorite-btn:hover {
+ background: rgba(0, 255, 255, 0.2);
+ color: #ffffff;
+ border-color: #ffffff;
+ transform: scale(1.1);
+ box-shadow: 
+   0 0 25px rgba(255, 255, 255, 0.4),
+   inset 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.favorite-btn.active {
+ color: #ff00ff;
+ border-color: #ff00ff;
+ background: rgba(255, 0, 255, 0.2);
+ box-shadow: 
+   0 0 20px rgba(255, 0, 255, 0.4),
+   inset 0 0 15px rgba(255, 0, 255, 0.2);
+ animation: favoritePulse 1.5s infinite;
+}
+
+@keyframes favoritePulse {
+ 0%, 100% { 
+   box-shadow: 
+     0 0 20px rgba(255, 0, 255, 0.4),
+     inset 0 0 15px rgba(255, 0, 255, 0.2);
+ }
+ 50% { 
+   box-shadow: 
+     0 0 30px rgba(255, 0, 255, 0.6),
+     inset 0 0 25px rgba(255, 0, 255, 0.3);
+ }
+}
+
+/* Cyberpunk Rating Select */
+.rating-select {
+ background: rgba(0, 0, 0, 0.9);
+ color: #00ffff;
+ border: 1px solid #00ffff;
+ padding: 0.5rem;
+ border-radius: 0;
+ cursor: pointer;
+ margin-top: 0.5rem;
+ font-family: 'Courier New', monospace;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ transition: all 0.3s ease;
+ clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+ box-shadow: 
+   0 0 10px rgba(0, 255, 255, 0.2),
+   inset 0 0 10px rgba(0, 255, 255, 0.05);
+}
+
+.rating-select:hover {
+ background: rgba(0, 255, 255, 0.1);
+ border-color: #ff00ff;
+ color: #ff00ff;
+ box-shadow: 
+   0 0 15px rgba(255, 0, 255, 0.3),
+   inset 0 0 15px rgba(255, 0, 255, 0.1);
+}
+
+.rating-select option {
+ background: #0a0a0a;
+ color: #00ffff;
+ border: none;
+}
+
+/* Cyberpunk Movie Info */
+.movie-info {
+ padding: 1rem;
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ gap: 0.5rem;
+ background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 0, 51, 0.8) 100%);
+ border-top: 1px solid rgba(0, 255, 255, 0.3);
+ position: relative;
+}
+
+.movie-info::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 1px;
+ background: linear-gradient(90deg, transparent, #00ffff, transparent);
+ animation: infoGlow 2s linear infinite;
+}
+
+@keyframes infoGlow {
+ 0%, 100% { opacity: 0.3; }
+ 50% { opacity: 1; }
+}
+
+.movie-info h3 {
+ font-size: 1rem;
+ margin: 0;
+ color: #ffffff;
+ font-family: 'Courier New', monospace;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.movie-info p {
+ color: #00ffff;
+ font-size: 0.9rem;
+ font-family: 'Courier New', monospace;
+ opacity: 0.8;
+ line-height: 1.4;
+}
+
+.user-rating {
+ color: #ff00ff;
+ font-size: 0.9rem;
+ margin-top: auto;
+ font-family: 'Courier New', monospace;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ text-shadow: 0 0 5px currentColor;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+}
+
+.user-rating::before {
+ content: '★';
+ color: #ffd700;
+ text-shadow: 0 0 10px #ffd700;
+ animation: starGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes starGlow {
+ 0% { opacity: 0.7; }
+ 100% { opacity: 1; }
+}
+
+/* Cyberpunk Responsive */
+@media (max-width: 768px) {
+ .movie-card {
+   font-size: 0.9rem;
+   clip-path: none;
+   border-radius: 4px;
+ }
+ 
+ .movie-info {
+   padding: 0.75rem;
+ }
+ 
+ .favorite-btn {
+   width: 32px;
+   height: 32px;
+   font-size: 1.2rem;
+   clip-path: none;
+   border-radius: 4px;
+ }
+ 
+ .rating-select {
+   clip-path: none;
+   border-radius: 4px;
+ }
+}
+
+/* Data corruption effect on hover */
+.movie-card:hover .movie-info h3 {
+ animation: dataCorruption 0.1s ease-in-out 3;
+}
+
+@keyframes dataCorruption {
+ 0%, 100% { transform: translateX(0); }
+ 25% { transform: translateX(-1px); }
+ 75% { transform: translateX(1px); }
+}
